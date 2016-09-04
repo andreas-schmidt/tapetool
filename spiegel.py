@@ -11,6 +11,13 @@ def lmbinv(i, speed, fs, f1):
     freq = f0 + (f1 - f0) * i / fs / t1
     return freq / speed
 
+def f_log(fs, i):
+    t = float(i) / fs
+    t1 = 10.
+    f0 = 20.
+    f1 = 20000.
+    return f0 * (f1 / f0)**(t / t1)
+
 def db(x):
     return 20 * np.log10(x)
 
@@ -24,6 +31,19 @@ def run(fs, data, speed, length, outfile, f1, ref):
         print(
             i,
             lmbinv(bins[i], speed, fs, f1),
+            *db(rms / ref),
+            file=outfile)
+
+def logfreq(fs, data, length, outfile, ref):
+    bs = int(fs * length)
+    norm = data * 1. / np.iinfo(data.dtype).max
+    bins = range(bs, len(data), bs)
+    chunked = np.split(norm, bins)
+    for i, c in enumerate(chunked[:-1]):
+        rms = np.sqrt(1. * np.sum(c**2, axis=0) / len(c))
+        print(
+            i,
+            f_log(fs, bins[i]),
             *db(rms / ref),
             file=outfile)
 
@@ -50,6 +70,14 @@ def main(prefix, s1, s2, s3, title):
             f1,
             ref)
 
+        t0p = t0 + 21.
+        reflog = get_reflevel(fs, data, t0p)
+        logfreq(fs,
+                data[tts(fs, t0p, t0p + 10.)],
+                length,
+                open('logfreq-' + out, 'w'),
+                reflog)
+
     r(s1, 2000., .1905, prefix + '-1905.dat')
     r(s2, 1000., .0953, prefix + '-0953.dat')
     r(s3,  500., .0476, prefix + '-0476.dat')
@@ -60,9 +88,21 @@ def main(prefix, s1, s2, s3, title):
     open(prefix + '-l.plt', 'w').write(plt_l)
     open(prefix + '-r.plt', 'w').write(plt_r)
 
+    template = open('template-freq.plt').read()
+    plt_l = template.format(title='L ' + title, prefix=prefix, col=3)
+    plt_r = template.format(title='R ' + title, prefix=prefix, col=4)
+    open(prefix + '-lf-l.plt', 'w').write(plt_l)
+    open(prefix + '-lf-r.plt', 'w').write(plt_r)
+
+
 if __name__ == '__main__':
-    main('k-4502', 40.222818, 91.359767, 142.636910, '4502 Halbspur Woelke')
-    main('k-5002', 40.224331, 91.363238, 142.645018, '5002 Halbspur Woelke')
-    main('k-6002', 25.648929, 76.788175, 128.070287, '6002 Halbspur Bogen (?)')
-    main('k-6004', 19.291440, 70.427377, 121.702700, '6004 Viertelspur Ferrotronic')
-    main('k-vorb', 40.085222, 91.085239, 142.085246, 'vorband')
+    main('k-4502', 40.222818, 91.359767, 142.636910,
+         '4502 Halbspur Woelke')
+    main('k-5002', 40.224331, 91.363238, 142.645018,
+         '5002 Halbspur Woelke')
+    main('k-6002', 25.648929, 76.788175, 128.070287,
+         '6002 Halbspur Bogen (?)')
+    main('k-6004', 19.291440, 70.427377, 121.702700,
+         '6004 Viertelspur Ferrotronic')
+    main('k-vorb', 40.085222, 91.085239, 142.085246,
+         'vorband')
