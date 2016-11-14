@@ -7,7 +7,7 @@ from helpers import lvl
 def silence(fs, t):
     return np.zeros(fs * t, dtype=float)
 
-def sin(fs, f, t):
+def sin(fs, t, f):
     T = int(t * fs)
     return np.sin(np.arange(T) * 2*np.pi * f/fs)
 
