@@ -24,4 +24,11 @@ def lvl(db):
 def rms(x):
     return np.sqrt(np.sum(x**2, axis=0) / len(x))
 
+def timeslice(fs, data, dt=0.1):
+    bs = int(dt * fs)
+    bins = range(bs, len(data), bs)
+    chunked = np.split(data, bins)
+    for i, c in enumerate(chunked[:-1]):
+        t = (i + 1.) * bs / fs
+        yield i, t, rms(c)
 
