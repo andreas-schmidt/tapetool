@@ -17,4 +17,9 @@ outfilename = filename[:-3] + 'dat'
 with open(outfilename, 'w') as outfile:
     fs, data = read_wav(filename)
     for i, t, r in timeslice(fs, data):
-        print(t, *db(r), file=outfile)
+        try:
+            print(t, *db(r), file=outfile)
+        except TypeError:
+            # if r is not iterable, it's only one channel
+            print(t, db(r), file=outfile)
+
