@@ -1,7 +1,7 @@
 import numpy as np
 
-from generate import silence, sin, logsweep, linramp, dbramp
-from helpers import lvl, write_wav
+from tapetool.generate import silence, sin, logsweep, linramp, dbramp
+from tapetool.helpers import lvl, write_wav
 
 fs = 96000
 

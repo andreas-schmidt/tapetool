@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 
-from helpers import read_wav, db, timeslice
+from tapetool.helpers import read_wav, db, timeslice
 
 try:
     filename = sys.argv[1]

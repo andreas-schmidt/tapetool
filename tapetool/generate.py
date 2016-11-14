@@ -2,6 +2,8 @@ import numpy as np
 from scipy.io import wavfile
 from scipy.signal import chirp
 
+from helpers import lvl
+
 def silence(fs, t):
     return np.zeros(fs * t, dtype=float)
 
