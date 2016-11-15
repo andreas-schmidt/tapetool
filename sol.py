@@ -1,6 +1,7 @@
 from __future__ import print_function
 
-from tapetool.helpers import read_wav, db, rms, timeslice
+from tapetool.helpers import read_wav, db, rms
+from tapetool.analysis import timeslice
 
 fs, data = read_wav("05-1905.wav")
 
