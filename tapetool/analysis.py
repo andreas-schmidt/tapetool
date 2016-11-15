@@ -26,3 +26,5 @@ def mol_1k(fs, data, dt):
 def mol_315(fs, data, dt):
     return mol(fs, data, dt, filters.thd_for_315)
 
+def find_mol(lvl, thd, limit=3.):
+    return lvl[thd >= limit][0]
