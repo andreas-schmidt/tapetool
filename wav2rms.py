@@ -5,7 +5,7 @@ from __future__ import print_function
 import sys
 
 from tapetool.helpers import read_wav, db
-from tapetool.analysis import it_timeslice
+from tapetool.analysis import timeslice
 
 try:
     filename = sys.argv[1]
@@ -13,14 +13,18 @@ except IndexError:
     print('usage {} <filename>'.format(sys.argv[0]))
     sys.exit()
 
-outfilename = filename[:-3] + 'dat'
+fs, data = read_wav(filename)
+channels = data.shape[1]
 
-with open(outfilename, 'w') as outfile:
-    fs, data = read_wav(filename)
-    for t, r in it_timeslice(fs, data, 0.1):
-        try:
-            print(t, *db(r), file=outfile)
-        except TypeError:
-            # if r is not iterable, it's only one channel
-            print(t, db(r), file=outfile)
+columns = list()
+for c in range(channels):
+    t, r = timeslice(fs, data, 0.1, c)
+    if not columns:
+        columns.append(t)
+    columns.append(db(r))
+
+outfilename = filename[:-3] + 'dat'
+with open(outfilename, 'w') as out:
+    for row in zip(*columns):
+        print(*row, file=out)
 
