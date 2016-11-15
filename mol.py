@@ -7,7 +7,7 @@ fs, data = read_wav("05-1905.wav")
 
 reflevel = data[16*fs:26*fs]
 thd_rl = 100. * rms(thd_for_1k(fs, reflevel)) / rms(reflevel) 
-print("THD ad reference level:", thd_rl)
+print("THD at reference level:", thd_rl)
 
 ramp = data[58*fs:68*fs]
 sig = list(timeslice(fs, ramp))
