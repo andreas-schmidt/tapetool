@@ -11,14 +11,14 @@ thd_rl = 100. * rms(thd_for_1k(fs, reflevel)) / rms(reflevel)
 print("THD at reference level:", thd_rl)
 
 ramp = data[58*fs:68*fs]
-sig = list(it_timeslice(fs, ramp))
-thd = list(it_timeslice(fs, thd_for_1k(fs, ramp)))
+sig = list(it_timeslice(fs, ramp, 0.1))
+thd = list(it_timeslice(fs, thd_for_1k(fs, ramp), 0.1))
 
 rl = db(rms(reflevel))
 out = open('mol.dat', 'w')
 for a, b in zip(sig, thd):
-    i, t, l1 = a
-    _, _, l2 = b
+    t, l1 = a
+    _, l2 = b
     x = db(l1) - rl
     k = 100. * l2 / l1
     print(*(t, ) + tuple(x) + tuple(k), file=out)

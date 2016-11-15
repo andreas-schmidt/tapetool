@@ -17,7 +17,7 @@ outfilename = filename[:-3] + 'dat'
 
 with open(outfilename, 'w') as outfile:
     fs, data = read_wav(filename)
-    for i, t, r in it_timeslice(fs, data):
+    for t, r in it_timeslice(fs, data, 0.1):
         try:
             print(t, *db(r), file=outfile)
         except TypeError:
