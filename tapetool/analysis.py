@@ -1,7 +1,7 @@
 import numpy as np
 from helpers import rms
 
-def timeslice(fs, data, dt=0.1):
+def it_timeslice(fs, data, dt=0.1):
     bs = int(dt * fs)
     bins = range(bs, len(data), bs)
     chunked = np.split(data, bins)

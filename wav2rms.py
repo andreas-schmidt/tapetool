@@ -5,7 +5,7 @@ from __future__ import print_function
 import sys
 
 from tapetool.helpers import read_wav, db
-from tapetool.analysis import timeslice
+from tapetool.analysis import it_timeslice
 
 try:
     filename = sys.argv[1]
@@ -17,7 +17,7 @@ outfilename = filename[:-3] + 'dat'
 
 with open(outfilename, 'w') as outfile:
     fs, data = read_wav(filename)
-    for i, t, r in timeslice(fs, data):
+    for i, t, r in it_timeslice(fs, data):
         try:
             print(t, *db(r), file=outfile)
         except TypeError:
