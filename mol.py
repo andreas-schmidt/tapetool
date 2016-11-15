@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 from tapetool.helpers import read_wav, db, rms
-from tapetool.analysis import it_timeslice
+from tapetool.analysis import timeslice
 from tapetool.filters import thd_for_1k
 
 fs, data = read_wav("05-1905.wav")
@@ -11,14 +11,10 @@ thd_rl = 100. * rms(thd_for_1k(fs, reflevel)) / rms(reflevel)
 print("THD at reference level:", thd_rl)
 
 ramp = data[58*fs:68*fs]
-sig = list(it_timeslice(fs, ramp, 0.1))
-thd = list(it_timeslice(fs, thd_for_1k(fs, ramp), 0.1))
+sig_x, sig_y = timeslice(fs, ramp, 0.05)
+_, thd_y = timeslice(fs, thd_for_1k(fs, ramp), 0.05)
 
 rl = db(rms(reflevel))
-out = open('mol.dat', 'w')
-for a, b in zip(sig, thd):
-    t, l1 = a
-    _, l2 = b
-    x = db(l1) - rl
-    k = 100. * l2 / l1
-    print(*(t, ) + tuple(x) + tuple(k), file=out)
+with open('mol.dat', 'w') as out:
+    for t, a, b in zip(sig_x, sig_y, thd_y):
+        print(t, db(a) - rl[0], 100. * b / a, file=out)
