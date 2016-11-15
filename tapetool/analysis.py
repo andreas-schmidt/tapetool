@@ -28,3 +28,7 @@ def mol_315(fs, data, dt):
 
 def find_mol(lvl, thd, limit=3.):
     return lvl[thd >= limit][0]
+
+def sol(fs, data, dt):
+    t, level = timeslice(fs, data, dt)
+    return np.max(db(level)), t, db(level)
