@@ -10,5 +10,5 @@ def thd_for_1k(fs, data):
     return butter_bandpass(fs, data, 2900, 3100)
 
 def thd_for_315(fs, data):
-    return butter_bandpass(fs, data, 915, 975)
+    return butter_bandpass(fs, data, 910, 980)
 

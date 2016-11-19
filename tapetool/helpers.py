@@ -24,3 +24,5 @@ def lvl(db):
 def rms(x):
     return np.sqrt(np.sum(x**2, axis=0) / len(x))
 
+def cut(fs, t0, length):
+    return slice(fs * t0, fs * (t0 + length))
