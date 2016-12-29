@@ -12,7 +12,11 @@ def it_timeslice(fs, data, dt):
 
 def timeslice(fs, data, dt, channel=0):
     x, y = zip(*list(it_timeslice(fs, data, dt)))
-    return np.array(x), np.array(y)[:,channel]
+    try:
+        return np.array(x), np.array(y)[:,channel]
+    except IndexError:
+        return np.array(x), np.array(y)
+        
 
 def mol(fs, data, dt, bpf):
     t, signal = timeslice(fs, data, dt)
