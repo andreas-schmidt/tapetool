@@ -35,7 +35,8 @@ Be aware:
 
 Running all measurements can be done by using `all.py`. You can run it on the generated test tones as a demonstration:
 
-```$ python all.py testsignal-fast.wav fast
+```
+$ python all.py testsignal-fast.wav fast
 prefix is "fast"
 using 1 kHz as reference frequency
 using wave file "testsignal-fast.wav" as input
