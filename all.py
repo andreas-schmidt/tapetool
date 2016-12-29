@@ -18,23 +18,22 @@ def main(wavfile, prefix, slow=False):
         len(data),
         1. * len(data) / fs))
     
+    # where to find what parts of audio in the test file
+    i_reflevel = tth.cut(fs, 1, 5)
+    i_mol = tth.cut(fs, 6.5, 5)
+    sol_start = [
+        (12.0, '6.3 kHz'),
+        (17.5, '10 kHz'),
+        (23.0, '12.5 kHz'),
+        (28.5, '14 kHz'),
+        (34.0, '16 kHz'),
+    ]
+
+    # select the right filter for THD measurements
     if slow:
-        i_reflevel = tth.cut(fs, 5, 10)
-        i_mol = tth.cut(fs, 48, 10)
         filter_thd = ttf.thd_for_315
     else:
-        i_reflevel = tth.cut(fs, 16, 10)
-        i_mol = tth.cut(fs, 58, 10)
         filter_thd = ttf.thd_for_1k
-    i_sweep = tth.cut(fs, 27, 20)
-
-    sol_start = {
-        78: '6.3 kHz',
-        83: '10 kHz',
-        88: '12.5 kHz',
-        93: '14 kHz',
-        98: '16 kHz',
-    }
 
     # reference level
     print('reference level:', tth.db(tth.rms(data[i_reflevel])))
@@ -52,11 +51,11 @@ def main(wavfile, prefix, slow=False):
 
     # SOL
     columns = list()
-    for t0 in sorted(sol_start):
+    for t0, sol_label in sol_start:
         x, y = tta.sol(fs, data[tth.cut(fs, t0, 5)], 0.1)
         i = np.argmax(y)
         print('SOL {:8}: {:6.2f}dB at {}s'.format(
-            sol_start[t0],
+            sol_label,
             y[i],
             x[i]
             ))
@@ -77,4 +76,4 @@ if __name__ == '__main__':
     args = ap.parse_args()
 
     main(args.wavfile, args.prefix, args.slow)
-        
+

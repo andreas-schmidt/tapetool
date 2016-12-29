@@ -19,6 +19,8 @@ audio = [
     silence(fs, 0.5),
     dbramp(fs, 5, -30, 0) * sin(fs, 5, 14000),
     silence(fs, 1),
+    dbramp(fs, 5, -30, 0) * sin(fs, 5, 16000),
+    silence(fs, 1),
 ]
 
 write_wav(fs, np.concatenate(audio), 'testsignal-slow.wav')
