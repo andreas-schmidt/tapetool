@@ -5,7 +5,7 @@ from scipy.signal import chirp
 from helpers import lvl
 
 def silence(fs, t):
-    return np.zeros(fs * t, dtype=float)
+    return np.zeros(int(fs * t), dtype=float)
 
 def sin(fs, t, f):
     T = int(t * fs)
