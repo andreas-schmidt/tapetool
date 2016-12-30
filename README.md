@@ -33,6 +33,10 @@ Be aware:
 * Also the function for reading wave files is limited and can't read 24 bit files. Please use either 16 bit or 32 bit wave.
 * It also doesn't like extra chunks in the wave file with metadata (such as track or artist names) - please don't add them.
 
+The first signal in the file, a steady tone at -10dB (amplitude) and reference frequency, corresponds to the magnetic reference level for the tape under test. Therefore you should set the recording level for that tone such that on playback, the same level as the referece level from a tape with known reference level is reached. It's helpful if your audio tool has a loop play function for this.
+
+To be sure against distortion from record or playback amplifiers, try a dry run including the tape deck in _source_ mode to get a feeling up to what levels you can trust the electronics of the tape deck. Also try connecting input and output of your sound card directly to see what it adds to distortion and saturation.
+
 Running all measurements can be done by using `all.py`. You can run it on the generated test tones as a demonstration:
 
 ```
