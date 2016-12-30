@@ -12,19 +12,19 @@ Installation
 
 Unfortunately, there is no install or `setup.py` yet. Currently, you have to clone the source code into a local folder and run it directly there. The requirements for running it are:
 
-* Python 2 or 3 (tested with Python 2.7.2 on Ubuntu 12.04, Python 2.7.12 on Ubuntu 16.04 and Python 3.5.2 on Ubuntu 16.04)
+* Python (tested with Python 2.7.2 on Ubuntu 12.04, Python 2.7.12 and Python 3.5.2 on Ubuntu 16.04)
 * NumPy
 * SciPy, in particular `scipy.io` and `scipy.signal`
 * [Gnuplot](http://gnuplot.info/) if you want to use the plotting examples
 
-I don't have first hand experience installing or running Python on Windows or Max OS. If you're in a GNU/Linux environment, probably your distribution has all dependencies in its repositories.
+Instructions for installing can be found here: [Installing the SciPy Stack](http://www.scipy.org/install.html)
 
 Usage
 -----
 
 At this time, nothing in this package is user friendly - I'm sorry for that and will improve here if work continues and if someone is interested. Even adding a GUI or a windows installer would not be impossible.
 
-First, you need to create a test signal by runnning `python testsignal.py`. There are no commmand line parameters - have a quick look at the code if you want to experiment. If you don't, it will create two wave files, mono, 96kHz for slow tape speeds (4.76 cm/s and 9.53 cm/s) and for fast tape speeds (19.05 cm/s and above). The difference lies in the frequencies that are used.
+First, you need to create a test signal by runnning `python testsignal.py`. There are two optional command line parameters: `--rate` to set a different sampling rate than the default of 96 kHz and `--slow` to switch the reference frequency from 1 kHz to 315 Hz. If you run it without these parameters, it will create a wave files, mono, 96kHz, for fast tape speeds (19.05 cm/s and above) called `testsignal.wav`
 
 You can then use any audio editor, player and/or recorder that works on your system to record them to the tape under test and record the result back into your computer. I usually use Audacity, but I'd recommend to use the one you're most familiar with.
 
@@ -36,10 +36,10 @@ Be aware:
 Running all measurements can be done by using `all.py`. You can run it on the generated test tones as a demonstration:
 
 ```
-$ python all.py testsignal-fast.wav fast
+$ python all.py testsignal.wav fast
 prefix is "fast"
 using 1 kHz as reference frequency
-using wave file "testsignal-fast.wav" as input
+using wave file "testsignal.wav" as input
 sample rate is 96000 Hz, read 3840000 samples (40.0 seconds)
 reference level: -13.0102999647
 THD at reference level: 0.0259502561826
