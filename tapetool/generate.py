@@ -2,7 +2,7 @@ import numpy as np
 from scipy.io import wavfile
 from scipy.signal import chirp
 
-from helpers import lvl
+from tapetool.helpers import lvl
 
 def silence(fs, t):
     return np.zeros(int(fs * t), dtype=float)

@@ -12,7 +12,7 @@ Installation
 
 Unfortunately, there is no install or `setup.py` yet. Currently, you have to clone the source code into a local folder and run it directly there. The requirements for running it are:
 
-* Python 2 (tested with Python 2.7.2 on Ubuntu 12.04 and Python 2.7.12 on Ubuntu 16.04)
+* Python 2 or 3 (tested with Python 2.7.2 on Ubuntu 12.04, Python 2.7.12 on Ubuntu 16.04 and Python 3.5.2 on Ubuntu 16.04)
 * NumPy
 * SciPy, in particular `scipy.io` and `scipy.signal`
 * [Gnuplot](http://gnuplot.info/) if you want to use the plotting examples

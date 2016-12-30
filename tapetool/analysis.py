@@ -1,6 +1,6 @@
 import numpy as np
-from helpers import rms, db
-import filters
+from tapetool.helpers import rms, db
+import tapetool.filters as filters
 
 def it_timeslice(fs, data, dt):
     bs = int(dt * fs)
