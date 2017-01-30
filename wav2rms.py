@@ -14,7 +14,10 @@ except IndexError:
     sys.exit()
 
 fs, data = read_wav(filename)
-channels = data.shape[1]
+try:
+    channels = data.shape[1]
+except IndexError:
+    channels = 1
 
 columns = list()
 for c in range(channels):
