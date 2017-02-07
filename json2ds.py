@@ -29,7 +29,7 @@ def fit_mol(mol_data):
     f = fit(x[cut], y[cut])
     return f(-30.46)
 
-data = json.load(open("test1.json"))
+data = json.load(open("test.json"))
 
 out = open('datasheet.dat', 'w')
 for b, m in data:
@@ -39,6 +39,7 @@ for b, m in data:
             m['reflevel'],
             fit_thd(m['mol_data']),
             m['s01'],
+            m['s63'],
             m['s10'],
             m['s16'],
             fit_mol(m['mol_data']),
