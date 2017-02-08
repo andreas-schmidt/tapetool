@@ -80,23 +80,10 @@ if __name__ == '__main__':
     import json
     out = list()
     cal = -20.51
-    for b, wavfile in [
-        (0.145, 'b00.wav'),
-        (0.200, 'b01.wav'),
-        (0.243, 'b02.wav'),
-        (0.292, 'b03.wav'),
-        (0.328, 'b04.wav'),
-        (0.366, 'b05.wav'),
-        (0.396, 'b06.wav'),
-        (0.423, 'b07.wav'),
-        (0.447, 'b08.wav'),
-        (0.490, 'b09.wav'),
-        (0.541, 'b10.wav'),
-        (0.578, 'b11.wav'),
-        (0.636, 'b12.wav'),
-        (0.725, 'b13.wav'),
-        (0.798, 'b14.wav'),
-    ]:
-        out.append((b, main(wavfile, cal)))
+    for line in open('bias.txt'):
+        if line.startswith('#'):
+            continue
+        b, wavfile = line.strip().split()
+        out.append((float(b), main(wavfile, cal)))
     json.dump(out, open('test.json', 'w'))
 
