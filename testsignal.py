@@ -7,7 +7,8 @@ cl19 = [0.03,  0.  , -0.62, -1.53, -2.38, -3.  , -3.93]
 cr19 = [0.03, -0.  , -0.65, -1.58, -2.45, -3.07, -3.99]
 cl38 = [0.02,  0.  , -0.47, -1.17, -1.83, -2.31, -3.06]
 cr38 = [0.03, -0.  , -0.55, -1.26, -1.93, -2.41, -3.16]
-fcorr = cl38
+#fcorr = cl38
+fcorr = [0., 0., 0., 0., 0., 0., 0.]
 
 def generate_signal(fs, f_ref):
     return [
@@ -66,6 +67,21 @@ def gen_sweep(fs):
         lvl(-40) * linsweep(fs, 10, 20, 20000), silence(fs, 0.5),
     ])
 
+def gen_test(fs):
+    return np.concatenate([
+        silence(fs, 0.5),
+        lvl(-20) * sin(fs, 1,  315), silence(fs, 1.0),
+        lvl(-20) * sin(fs, 1, 1000), silence(fs, 1.0),
+        silence(fs, 5.0),
+        dbramp(fs, 5, -30, 0) * sin(fs, 5,   315), silence(fs, 1.),
+        dbramp(fs, 5, -30, 0) * sin(fs, 5,  1000), silence(fs, 1.),
+        dbramp(fs, 5, -30, 0) * sin(fs, 5,  6300), silence(fs, 1.),
+        dbramp(fs, 5, -30, 0) * sin(fs, 5, 10000), silence(fs, 1.),
+        dbramp(fs, 5, -30, 0) * sin(fs, 5, 16000), silence(fs, 1.),
+        lvl(-40) * logsweep(fs, 20, 15, 24000), silence(fs, 1.),
+    ])
+
+
 if __name__ == '__main__':
     import argparse
     ap = argparse.ArgumentParser()
@@ -74,6 +90,10 @@ if __name__ == '__main__':
     args = ap.parse_args()
     fs = args.rate
 
-    write_wav(fs, gen_b77hs_19l(fs), 'b77hs_19l.wav')
-    write_wav(fs, gen_b77hs_38l(fs), 'b77hs_38l.wav')
+    write_wav(fs, gen_test(fs), 'mol-sol-sweep.wav')
+    write_wav(fs, lvl(-20) * sin(fs, 60, 1000), 'sin-1000.wav')
+    write_wav(fs, lvl(-20) * sin(fs, 60, 315), 'sin-315.wav')
+
+#   write_wav(fs, gen_b77hs_19l(fs), 'b77hs_19l.wav')
+#   write_wav(fs, gen_b77hs_38l(fs), 'b77hs_38l.wav')
 #   write_wav(fs, gen_sweep(fs), 'sweep.wav')
